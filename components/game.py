@@ -1,9 +1,12 @@
 import pygame
 
-from utils.constanst import (
+from components.player import Player
+from utils.constants import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
-    TITLE)
+    TITLE,
+    BLACK
+)
 
 
 
@@ -12,22 +15,26 @@ class Game:
         pygame.init()
         pygame.display.set_caption(TITLE)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.clock = pygame.time.Clock()
 
     def run(self):
         self.create_components()
         # Game loop:
         self.playing = True
         while self.playing:
+            self.clock.tick(6440)
             self.events()
             self.update()
             self.draw()
         pygame.quit()
 
     def create_components(self):
-        pass
+        self.all_sprites = pygame.sprite.Group()
+        player = Player()
+        self.all_sprites.add(player)
 
     def update(self):
-        pass
+        self.all_sprites.update()
 
     def events(self):
        for event in pygame.event.get():
@@ -35,7 +42,9 @@ class Game:
                self.playing = False
 
     def draw(self):
-        pass
+        self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        pygame.display.flip()
 
 
 
