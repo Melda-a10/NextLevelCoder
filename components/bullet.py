@@ -11,7 +11,7 @@ from utils.constants import (
 )
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, speedx, speedy):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(path.join(IMG_DIR, "bullet.png")).convert()
         self.image = pygame.transform.scale(self.image, (10, 10))
@@ -19,10 +19,12 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x
-        self.speedy = -5
+        self.speedy = speedy
+        self.speedx = speedx
 
     def update(self):
         self.rect.y += self.speedy
+        self.rect.x += self.speedx
 
         if self.rect.bottom < 0:
             self.kill()

@@ -1,5 +1,7 @@
 import pygame
+import random
 
+from components.power_up import Power
 from components.ball import Ball
 from components.player import Player
 from utils.constants import (
@@ -36,12 +38,12 @@ class Game:
     def create_components(self):
         self.all_sprites = pygame.sprite.Group()
         self.balls = pygame.sprite.Group()
+        self.powerups = pygame.sprite.Group()
         self.player = Player(self)
         self.all_sprites.add(self.player)
         ball = Ball(1)
         self.all_sprites.add(ball)
         self.balls.add(ball)
-
 
     def update(self):
         self.all_sprites.update()
@@ -55,6 +57,13 @@ class Game:
                     ball = Ball(hit.size + 1)
                     self.all_sprites.add(ball)
                     self.balls.add(ball)
+        if random.randrange(0, 1000) < 2:
+            power_up = Power(1)
+            self.powerups.add(power_up)
+            self.all_sprites.add(power_up)
+        hits = pygame.sprite.spritecollide(self.player, self.powerups, True)
+        if hits:
+            self.player.powerup()
 
 
 
@@ -86,8 +95,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit(0)
-                    if event.type == pygame.KEYUP:
-                        if event.key == pygame.K_RETURN:
-                            waiting = False
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RETURN:
+                        waiting = False
+
 
 

@@ -37,6 +37,17 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
 
     def shoot(self):
-        bullet = Bullet(self.rect.centerx, self.rect.top)
+        bullet = Bullet(self.rect.centerx, self.rect.top, 0, -5)
+        self.game.all_sprites.add(bullet)
+        self.bullets.add(bullet)
+
+    def powerup(self):
+        bullet = Bullet(self.rect.centerx, self.rect.top, 0, -5)
+        self.game.all_sprites.add(bullet)
+        self.bullets.add(bullet)
+        bullet = Bullet(self.rect.centerx, self.rect.top,-5, -5)
+        self.game.all_sprites.add(bullet)
+        self.bullets.add(bullet)
+        bullet = Bullet(self.rect.centerx, self.rect.top, 5, -5)
         self.game.all_sprites.add(bullet)
         self.bullets.add(bullet)
